@@ -1,0 +1,19 @@
+{
+    "name": "aleksey/my-php-blog",
+    "description": "Blog on PHP and MySQL",
+    "autoload": {
+        "psr-4": {
+            "Aleksey\\MyPhpBlog\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Aleksey Kononenko",
+            "email": "aleksey19988@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.5"
+    }
+}
