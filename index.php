@@ -32,8 +32,11 @@ $app = AppFactory::create();
 $app->setBasePath("/my-php-blog");
 $app->addErrorMiddleware(true, true, true);
 
-$app->get('/', function (Request $request, Response $response, $args) use ($view) {
-    $body = $view->render('index.twig');
+$app->get('/', function (Request $request, Response $response, $args) use ($view, $postMapper) {
+    $posts = $postMapper->getList();
+    $body = $view->render('index.twig', [
+        'posts' => $posts,
+    ]);
     $response->getBody()->write($body);
     return $response;
 });
