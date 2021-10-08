@@ -2,6 +2,7 @@
 
 namespace Aleksey\MyPhpBlog;
 
+use Exception;
 use PDO;
 
 class PostMapper
@@ -34,9 +35,17 @@ class PostMapper
         return array_shift($result);
     }
 
-    public function getList(): ?array
+    /**
+     * @param $direction
+     * @return array|null
+     * @throws Exception
+     */
+    public function getList(string $direction = 'DESC'): ?array
     {
-        $statement = $this->connection->prepare('SELECT * FROM post ORDER BY published_date DESC');
+        if (!in_array($direction, ['ASC', 'DESC'])) {
+            throw new Exception('Некорректная сортировка в SQL-запросе!');
+        }
+        $statement = $this->connection->prepare('SELECT * FROM post ORDER BY published_date ' . $direction);
         $statement->execute();
 
         return $statement->fetchAll();

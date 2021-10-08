@@ -33,7 +33,7 @@ $app->setBasePath("/my-php-blog");
 $app->addErrorMiddleware(true, true, true);
 
 $app->get('/', function (Request $request, Response $response, $args) use ($view, $postMapper) {
-    $posts = $postMapper->getList();
+    $posts = $postMapper->getList('DESC');
     $body = $view->render('index.twig', [
         'posts' => $posts,
     ]);
