@@ -52,9 +52,11 @@ $app->get('/about', function (Request $request, Response $response) use ($view) 
     return $response;
 });
 
-$app->get('/blog[/{page}]', function (Request $request, Response $response) use ($view, $connection) {
-    $latestPosts = new LatestPosts($connection);
-    $posts = $latestPosts->get(2);
+$app->get('/blog[/{page}]', function (Request $request, Response $response, $args) use ($view, $connection) {
+    $latestPosts = new PostMapper($connection);
+    $page = isset($args['page']) ? (int) $args['page'] : 1;
+    $limit = 2;
+    $posts = $latestPosts->getList($page, $limit, 'DESC');
     $body = $view->render('blog.twig', [
         'posts' => $posts,
     ]);
