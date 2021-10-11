@@ -1,6 +1,7 @@
 <?php
 
 use Aleksey\MyPhpBlog\LatestPosts;
+use Aleksey\MyPhpBlog\Twig\AssetExtension;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -13,10 +14,9 @@ require __DIR__ . '/vendor/autoload.php';
 $loader = new FilesystemLoader('templates');
 $view = new Environment($loader);
 
+$view->addExtension(new AssetExtension());
+
 $config = include 'config/database.php';
-//$dsn = $config['dsn'];
-//$username = $config['username'];
-//$password = $config['password'];
 ['dsn' => $dsn, 'username' => $username, 'password' => $password] = $config;
 
 try {
