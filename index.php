@@ -42,9 +42,21 @@ $app->get('/', function (Request $request, Response $response) use ($view, $conn
     return $response;
 });
 
+
+
 $app->get('/about', function (Request $request, Response $response) use ($view) {
     $body = $view->render('about.twig', [
         'name' => 'Alex',
+    ]);
+    $response->getBody()->write($body);
+    return $response;
+});
+
+$app->get('/blog[/{page}]', function (Request $request, Response $response) use ($view, $connection) {
+    $latestPosts = new LatestPosts($connection);
+    $posts = $latestPosts->get(2);
+    $body = $view->render('blog.twig', [
+        'posts' => $posts,
     ]);
     $response->getBody()->write($body);
     return $response;
